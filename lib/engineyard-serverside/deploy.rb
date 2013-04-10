@@ -358,8 +358,6 @@ YML
         end
       end
 
-      protected
-
       # Use [] to access attributes instead of calling methods so
       # that we get nils instead of NoMethodError.
       #
@@ -370,13 +368,14 @@ YML
         @strategy ||= config.strategy_class.new(
           shell,
           :verbose          => config.verbose,
-          :repository_cache => paths.repository_cache.to_s,
+          :repository_cache => paths.repository_cache,
           :app              => config.app,
-          :repo             => config[:repo],
+          :remote_uri       => config[:repo],
           :ref              => config[:branch]
         )
       end
-      public :strategy
+
+      protected
 
       def base_callback_command_for(what)
         cmd =  [About.binary, 'hook', what.to_s]
